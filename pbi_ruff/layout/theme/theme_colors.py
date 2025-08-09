@@ -59,7 +59,7 @@ class ThemeColorsProtanopia(ThemeColors):
         protanopia = colorblind.simulate_colorblindness(colors, colorblind_type="protanopia")
         protanopia_tuples: list[tuple[int, int, int]] = [
             convert_color(sRGBColor(*color[0]), LabColor) for color in protanopia
-        ]
+        ]  # pyright: ignore[reportAssignmentType]
 
         conflicting_colors: list[tuple[tuple[int, int, int], tuple[int, int, int]]] = []
         for c1 in protanopia_tuples:

@@ -9,7 +9,7 @@ class VisualRules(RuleGroup):
     """Group of rules related to visuals."""
 
     name = "Visual Rules"
-    rules = [DiscourageImplicitMeasures]
+    rules = (DiscourageImplicitMeasures,)
 
     @classmethod
     def check(cls, visual: VisualContainer) -> list[RuleResult]:

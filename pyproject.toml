@@ -38,10 +38,14 @@ relative_files = true
 max-line-length = 120
 file-encoding = "utf8"
 
+[tool.pyright]
+
+
 [tool.ruff]
 line-length = 120
 preview = true
 target-version = "py311"
+
 
 [tool.ruff.lint]
 select = ["ALL"]
