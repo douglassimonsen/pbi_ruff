@@ -1,1 +1,4 @@
 venv
+test*
+todo
+__pycache__

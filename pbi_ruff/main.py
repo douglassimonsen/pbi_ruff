@@ -2,6 +2,7 @@ from pbi_core import LocalReport
 
 from .base_rule import RuleResult
 from .dax import DaxFormattingRules, DaxPerformanceRules
+from .dax.descriptions.main import DaxDescriptionRules
 from .layout import LayoutRules, SectionRules, ThemeRules
 
 
@@ -25,5 +26,11 @@ def check_rules(report: LocalReport) -> list[RuleResult]:
     for measure in report.ssas.measures:
         results.extend(DaxFormattingRules.check(measure))
         results.extend(DaxPerformanceRules.check(measure))
+        results.extend(DaxDescriptionRules.check(measure))
 
+    for table in report.ssas.tables:
+        results.extend(DaxDescriptionRules.check(table))
+
+    for column in report.ssas.columns:
+        results.extend(DaxDescriptionRules.check(column))
     return results

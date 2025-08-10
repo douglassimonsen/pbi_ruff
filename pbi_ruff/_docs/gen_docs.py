@@ -6,7 +6,7 @@ import jinja2
 from git import TYPE_CHECKING
 
 from pbi_ruff.base_rule import RuleGroup
-from pbi_ruff.dax import DaxFormattingRules, DaxPerformanceRules
+from pbi_ruff.dax import DaxDescriptionRules, DaxFormattingRules, DaxPerformanceRules
 from pbi_ruff.layout import LayoutRules, SectionRules, ThemeRules, VisualRules
 
 if TYPE_CHECKING:
@@ -38,6 +38,7 @@ group_info: list[dict[str, str | int]] = []
 rule_groups: list[type[RuleGroup]] = [
     DaxFormattingRules,
     DaxPerformanceRules,
+    DaxDescriptionRules,
     LayoutRules,
     SectionRules,
     ThemeRules,
@@ -48,9 +49,9 @@ for group in rule_groups:
         "name": group.name,
         "rules": len(group.rules),
     })
-    with (
-        pathlib.Path(__file__).parents[3] / "docs/docs/ruff/rule_groups/" / f"{group.name.replace(' ', '_')}.md"
-    ).open("w", encoding="utf-8") as f:
+    doc_dir = pathlib.Path(__file__).parents[2] / "docs/docs/pbi_ruff/rule_groups/"
+    doc_dir.mkdir(parents=True, exist_ok=True)
+    with (doc_dir / f"{group.name.replace(' ', '_')}.md").open("w", encoding="utf-8") as f:
         f.write(
             templates["group"].render(
                 group=group,
@@ -60,5 +61,5 @@ for group in rule_groups:
             ),
         )
 
-with (pathlib.Path(__file__).parents[3] / "docs/docs/ruff/main.md").open("w", encoding="utf-8") as f:
+with (pathlib.Path(__file__).parents[2] / "docs/docs/pbi_ruff/main.md").open("w", encoding="utf-8") as f:
     f.write(templates["entry"].render(groups=sorted(group_info, key=operator.itemgetter("name"))))
