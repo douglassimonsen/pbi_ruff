@@ -3,7 +3,7 @@ from pbi_core import LocalReport
 from .base_rule import RuleResult
 from .dax import DaxFormattingRules, DaxPerformanceRules
 from .dax.descriptions.main import DaxDescriptionRules
-from .layout import LayoutRules, SectionRules, ThemeRules
+from .layout import LayoutRules, SectionRules, ThemeRules, VisualRules
 
 
 def check_rules(report: LocalReport) -> list[RuleResult]:
@@ -16,6 +16,8 @@ def check_rules(report: LocalReport) -> list[RuleResult]:
 
     for section in report.static_files.layout.sections:
         results.extend(SectionRules.check(section))
+        for visual in section.visualContainers:
+            results.extend(VisualRules.check(visual))
 
     # Other static files rules
     if False:
